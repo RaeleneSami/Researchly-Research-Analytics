@@ -1,0 +1,134 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "434817c9-a502-4109-b8ec-12c0b97f5c73",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Collecting pypdf\n",
+      "  Downloading pypdf-7.1.0-py3-none-any.whl.metadata (7.6 kB)\n",
+      "Downloading pypdf-7.1.0-py3-none-any.whl (418 kB)\n",
+      "Installing collected packages: pypdf\n",
+      "Successfully installed pypdf-7.1.0\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "\n",
+    "%pip install pypdf\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "c9e647d9-8dfa-4c3d-9668-6569b35868e3",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Total Research Articles: 5\n",
+      "\n",
+      "Research Articles:\n",
+      "          Article  Word_Count\n",
+      "0  research_1.txt        5602\n",
+      "1  research_2.txt        2416\n",
+      "2  research_3.txt        3828\n",
+      "3  research_4.txt        5922\n",
+      "4  research_5.txt        4027\n",
+      "\n",
+      "First Article Content:\n",
+      "The purposes of this article are to position mixed methods research\n",
+      "(mixed research is a synonym) as the natural complement to traditional qualitative and quantitative research, to present pragmatism\n",
+      "as offering an attractive philosophical partner for mixed methods research, and to provide a framework for designing and conducting\n",
+      "mixed methods research. In doing this, we briefly review the paradigm “wars” and incompatibility thesis, we show some commonalities between quantitative and qualitative research, we explain the\n",
+      "tenets of pragmatism, we explain the fundamental principle of mixed\n",
+      "research and how to apply it, we provide specific sets of designs for\n",
+      "the two major types of mixed methods research (mixed-model designs and mixed-method designs), and, finally, we explain mixed methods research as following (recursively) an eight-step process. A key\n",
+      "feature of mixed methods research is its methodological pluralism\n",
+      "or eclecticism, which frequently results in superior research (c\n",
+      "\n",
+      "DataFrame Created Successfully!\n"
+     ]
+    }
+   ],
+   "source": [
+    "\n",
+    "import pandas as pd\n",
+    "import zipfile\n",
+    "import os\n",
+    "\n",
+    "articles = []\n",
+    "\n",
+    "with zipfile.ZipFile(\"research_corpus.zip\", \"r\") as zip_ref:\n",
+    "\n",
+    "    for filename in sorted(zip_ref.namelist()):\n",
+    "\n",
+    "        if filename.lower().endswith(\".txt\"):\n",
+    "\n",
+    "            content = zip_ref.read(filename).decode(\n",
+    "                \"utf-8\", errors=\"replace\"\n",
+    "            )\n",
+    "\n",
+    "            articles.append({\n",
+    "                \"Article\": os.path.basename(filename),\n",
+    "                \"Content\": content,\n",
+    "                \"Word_Count\": len(content.split())\n",
+    "            })\n",
+    "\n",
+    "df_articles = pd.DataFrame(articles)\n",
+    "\n",
+    "print(\"Total Research Articles:\", len(df_articles))\n",
+    "\n",
+    "print(\"\\nResearch Articles:\")\n",
+    "print(df_articles[[\"Article\", \"Word_Count\"]])\n",
+    "\n",
+    "print(\"\\nFirst Article Content:\")\n",
+    "print(df_articles[\"Content\"].iloc[0][:1000])\n",
+    "\n",
+    "df_articles.to_csv(\n",
+    "    \"research_articles_dataframe.csv\",\n",
+    "    index=False\n",
+    ")\n",
+    "\n",
+    "print(\"\\nDataFrame Created Successfully!\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7e18f3b5-7d3f-42bb-ae01-fcdf19389989",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [conda env:base] *",
+   "language": "python",
+   "name": "conda-base-py"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

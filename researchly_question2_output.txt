@@ -1,0 +1,35 @@
+
+QUESTION 2.1 – SAME HOLDOUT TEST SET FOR ALL MODELS
+                  Model  CV Macro F1  Test Accuracy  Test Macro F1  AI Recall
+             Linear SVM       0.8536         0.9333         0.8912     0.7447
+    Logistic Regression       0.8307         0.9111         0.8655     0.7872
+         SGD Classifier       0.8058         0.9067         0.8529     0.7234
+ Complement Naive Bayes       0.7706         0.8844         0.7942     0.5319
+Baseline Multinomial NB       0.5495         0.8400         0.6437     0.2340
+
+Selected by training CV: Linear SVM
+
+QUESTION 2.2 – HYPERPARAMETER OPTIMISATION
+Previous CV Macro F1: 0.8536
+Tuned CV Macro F1: 0.8566
+Improvement in CV Macro F1: 0.003
+Optimal parameters: {'classifier__C': 1, 'tfidf__max_features': 3000, 'tfidf__ngram_range': (1, 2)}
+Tuned holdout accuracy: 0.9244
+Tuned holdout macro F1: 0.8789
+Tuned AI recall: 0.7447
+
+Classification report:
+               precision    recall  f1-score   support
+
+          ai       0.88      0.74      0.80        47
+   classical       0.94      0.97      0.95       178
+
+    accuracy                           0.92       225
+   macro avg       0.91      0.86      0.88       225
+weighted avg       0.92      0.92      0.92       225
+
+Confusion matrix [ai,classical]:
+ [[ 35  12]
+ [  5 173]]
+
+Saved original selected model for Question 2.3 and tuned model separately
